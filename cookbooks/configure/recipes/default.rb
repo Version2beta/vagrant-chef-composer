@@ -81,13 +81,7 @@ cookbook_file "/home/vagrant/.gitconfig" do
   mode 00755
 end
 
-directory "/var/www/" do
-  owner "www-data"
-  group "www-data"
-  owner 00777
-end
-
-link "/var/www/blog" do
-  to "/home/vagrant/project"
+link "/etc/apache2" do
+  to "/home/vagrant/project/"
 end
 
