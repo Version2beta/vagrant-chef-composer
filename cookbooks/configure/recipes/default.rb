@@ -14,6 +14,13 @@ directory "/home/vagrant/project/" do
   group "vagrant"
 end
 
+cookbook_file "/home/vagrant/project/composer.json" do
+  source "composer.json"
+  owner "vagrant"
+  group "vagrant"
+  mode 00644
+end
+
 directory "/home/vagrant/bin" do
   owner "vagrant"
   group "vagrant"
