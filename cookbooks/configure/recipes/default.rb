@@ -9,7 +9,7 @@
 
 include_recipe "database"
 
-directory "/home/vagrant/blog/" do
+directory "/home/vagrant/project/" do
   owner "vagrant"
   group "vagrant"
 end
@@ -81,6 +81,6 @@ directory "/var/www/" do
 end
 
 link "/var/www/blog" do
-  to "/home/vagrant/blog"
+  to "/home/vagrant/project"
 end
 

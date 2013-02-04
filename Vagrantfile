@@ -77,10 +77,7 @@ Vagrant::Config.run do |config|
     chef.add_recipe "build-essential"
     chef.add_recipe "ohai"
     chef.add_recipe "mysql::server"
-    #chef.add_recipe "nginx"
-    #chef.add_recipe "php-fpm"
     chef.add_recipe "apache2"
-    chef.add_recipe "wordpress"
     chef.add_recipe "vim"
     chef.add_recipe "configure"
     # You may also specify custom JSON attributes:
