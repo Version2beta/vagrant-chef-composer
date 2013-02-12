@@ -1,29 +1,24 @@
 # Cookbook Name:: configure
 # Recipe:: default
 #
-# Copyright 2013, Example Com
-#
-#
+# Copyright 2013, Version2beta LLC
 
 # execute 'DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade'
 
+include_recipe "mysql::server"
 include_recipe "database"
+include_recipe "apache2"
+include_recipe "php"
+include_recipe "composer"
+include_recipe "vim"
 
-directory "/home/vagrant/project/" do
-  owner "vagrant"
-  group "vagrant"
-end
-
-cookbook_file "/home/vagrant/project/composer.json" do
-  source "composer.json"
-  owner "vagrant"
-  group "vagrant"
-  mode 00644
-end
-
-directory "/home/vagrant/bin" do
-  owner "vagrant"
-  group "vagrant"
+["/home/vagrant/project/", "/home/vagrant/bin"].each do |d|
+  directory d do
+    owner "vagrant"
+    group "vagrant"
+    mode 00755
+    recursive true
+  end
 end
 
 remote_file "/home/vagrant/bin/vcprompt" do
@@ -48,37 +43,11 @@ cookbook_file "/home/vagrant/.vimrc" do
   mode 00755
 end
 
-gitbag = data_bag_item("git", "ssh_keys")
-ssh_public = gitbag["_default"]["public_key"]
-ssh_private = gitbag["_default"]["private_key"]
-known_hosts = gitbag["_default"]["known_hosts"]
-
-file "/home/vagrant/.ssh/id_rsa.pub" do
-  content ssh_public
+cookbook_file "/home/vagrant/project/composer.json" do
+  source "composer.json"
   owner "vagrant"
   group "vagrant"
-  mode 00600
-end
-
-file "/home/vagrant/.ssh/id_rsa" do
-  content ssh_private
-  owner "vagrant"
-  group "vagrant"
-  mode 00600
-end
-
-file "/home/vagrant/.ssh/known_hosts" do
-  content known_hosts
-  owner "vagrant"
-  group "vagrant"
-  mode 00600
-end
-
-cookbook_file "/home/vagrant/.gitconfig" do
-  source "gitconfig"
-  owner "vagrant"
-  group "vagrant"
-  mode 00755
+  mode 00644
 end
 
 directory "/var/www" do
@@ -89,4 +58,3 @@ end
 link "/var/www/project" do
   to "/home/vagrant/project/"
 end
-
