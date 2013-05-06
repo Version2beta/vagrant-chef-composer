@@ -7,7 +7,6 @@
 
 # execute 'DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade'
 
-include_recipe "database"
 
 directory "/home/vagrant/project/" do
   owner "vagrant"
@@ -55,12 +54,18 @@ cookbook_file "/home/vagrant/.gitconfig" do
   mode 00755
 end
 
-directory "/var/www" do
-  owner "www-data"
-  group "www-data"
+include_recipe "database"
+include_recipe "apache2"
+include_recipe "apache2::mod_php5"
+
+include_recipe "composer"
+include_recipe "vim"
+
+link "/etc/apache2/htdocs" do
+  to "/home/vagrant/project"
 end
 
-link "/var/www/project" do
-  to "/home/vagrant/project/"
+apache_module "php5" do
+  enable true
 end
 
