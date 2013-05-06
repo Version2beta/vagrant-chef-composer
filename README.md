@@ -1,6 +1,6 @@
-vagrant-chef-composer
-=====================
+# vagrant-chef-composer
 
+<<<<<<< HEAD
 A shortcut to a dev environment with PHP Composer on Vagrant (1.2+) provisioned by Chef.
 
 Composer is a package management system for PHP. You can get more information about it at [getcomposer.org](http://getcomposer.org).

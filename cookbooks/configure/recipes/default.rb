@@ -1,28 +1,17 @@
 # Cookbook Name:: configure
 # Recipe:: default
 #
-# Copyright 2013, Example Com
-#
-#
+# Copyright 2013, Version2beta LLC
 
 # execute 'DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade'
 
-
-directory "/home/vagrant/project/" do
-  owner "vagrant"
-  group "vagrant"
-end
-
-cookbook_file "/home/vagrant/project/composer.json" do
-  source "composer.json"
-  owner "vagrant"
-  group "vagrant"
-  mode 00644
-end
-
-directory "/home/vagrant/bin" do
-  owner "vagrant"
-  group "vagrant"
+["/home/vagrant/project/", "/home/vagrant/bin"].each do |d|
+  directory d do
+    owner "vagrant"
+    group "vagrant"
+    mode 00755
+    recursive true
+  end
 end
 
 remote_file "/home/vagrant/bin/vcprompt" do
@@ -47,11 +36,11 @@ cookbook_file "/home/vagrant/.vimrc" do
   mode 00755
 end
 
-cookbook_file "/home/vagrant/.gitconfig" do
-  source "gitconfig"
+cookbook_file "/home/vagrant/project/composer.json" do
+  source "composer.json"
   owner "vagrant"
   group "vagrant"
-  mode 00755
+  mode 00644
 end
 
 include_recipe "database"
@@ -68,4 +57,3 @@ end
 apache_module "php5" do
   enable true
 end
-
